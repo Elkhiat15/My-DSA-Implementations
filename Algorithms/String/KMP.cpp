@@ -6,7 +6,7 @@ int len = pattern.length();
 
     int ptr =0 , i = 1;
     while (i < len){
-     
+
         if(pattern[ptr] == pattern[i])
             pi[i++] = ++ptr;
        else
@@ -30,21 +30,24 @@ int len = pattern.length();
     CalcPrefix(pattern, pi);
 
     bool found = false;
-    for (int i = 0, j = 0; i < n; i++)
+     int i = 0, j = 0;
+     while (i< n )
      {
          if (text[i] == pattern[j])
          {
+             i++, j++;
              //match all the pattern
-             if (++j == m) {
-                 cout << "The pattern occurs at " << i - j + 1 << endl;
+             if (j == m) {
+                 cout << "The pattern occurs at " << i - m << endl;
                 found = true;
              }
          }
          //does not match -> move to its parent
-         else if (j > 0)
-         {
-             j = pi[j];
-             i--;
+         else if(i < n && pattern[j] != text[i]){
+             if (j > 0)
+             j = pi[j - 1];
+             else
+                 i++;
          }
      }
      if(!found )
@@ -53,7 +56,7 @@ int len = pattern.length();
 
 int main() {
     pair<string, string > test[7]= {
-            {"thankyou", "you"},    //The pattern occurs at 5
+            {"mississippi", "issip"},    //The pattern occurs at 5
             {"you","thankyou"},     //Pattern not found
             {"youAreGood", "you"},  //The pattern occurs at 0
             {"meatYouSoon", "you"},  //Pattern not found
